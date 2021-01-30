@@ -1,0 +1,39 @@
+{% extends "base.html"%}
+{% block contents %}
+<div class="row mt-5">
+    <div class="col-12 text-center">
+        <h1>회원가입</h1>
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        {{ error }}
+        <!-- views.py 에서 res_data를 통해 전달 받을 변수를 중괄호 두개()를 통해 사용 -->
+    </div>
+</div>
+<div class="row mt-5">
+    <div class="col-12">
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <!-- {% csrf_token %} : 토큰 생성 검즘 -->
+            <div class="mb-3">
+                <label for="username" class="form-label">사용자 이름</label>
+                <input type="text" class="form-control" id="username" placeholder="사용자 이름" name="username" />
+            </div>
+            <div class="mb-3">
+                <label for="useremail" class="form-label">사용자 이메일</label>
+                <input type="email" class="form-control" id="useremail" placeholder="사용자 이름" name="useremail" />
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호" name="password" />
+            </div>
+            <div class="mb-3">
+                <label for="re-password">비밀번호 확인</label>
+                <input type="password" class="form-control" id="re-password" placeholder="비밀번호 확인" name="re-password" />
+            </div>
+            <button type="submit" class="btn btn-primary">등록</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
