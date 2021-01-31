@@ -85,5 +85,4 @@ def register(request):
         deathuser.save()
 
         return render(request, 'login.html', res_data) # res_data라는 변수를 html 코드로 전송
-        # POST 방식으로 접근할 떄
 
