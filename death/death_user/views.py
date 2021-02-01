@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password 
 # make_password : 비밀번호를 암호화     check_password : 비밀번호를 확인
 from .models import Deathuser
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 # Create your views here.
 # views.py : 비즈니스 로직을 관리하는 파이썬 파일
 
@@ -52,37 +52,54 @@ def login(request):
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
+
 def register(request):
-    if request.method == 'GET':
-        return render(request, 'register.html') 
-        # GET 방식으로 접근할 떄 
-
-    elif request.method == 'POST':
-        username = request.POST.get('username', None)
-        useremail = request.POST.get('useremail', None)
-        password = request.POST.get('password', None)
-        re_password = request.POST.get('re-password', None)
-        # request.POST의 get 메소드의 두번째 매개변수는 기본 값을 의미한다.
-
-        # username = request.POST['username']
-        # password = request.POST['password']
-        # re_password = request.POST['re-password']
-
-        res_data = {}
-
-        if not (username and useremail and password and re_password):
-            res_data['error'] = '모든 값을 입력해야합니다.'
-        if password != re_password:
-            res_data['error'] = '비밀번호가 다릅니다.'
-            # return HttpResponse('비밀번호가 다릅니다!')
-        else:
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
             deathuser = Deathuser(
-                username = username,
-                useremail = useremail,
-                password = make_password(password)
+                username = form.username,
+                useremail = form.useremail,
+                password = make_password(form.password)
             )
+            deathuser.save()
+            return redirect('/')
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
+            
 
-        deathuser.save()
+# def register(request):
+#     if request.method == 'GET':
+#         return render(request, 'register.html') 
+#         # GET 방식으로 접근할 떄 
 
-        return render(request, 'login.html', res_data) # res_data라는 변수를 html 코드로 전송
+#     elif request.method == 'POST':
+#         username = request.POST.get('username', None)
+#         useremail = request.POST.get('useremail', None)
+#         password = request.POST.get('password', None)
+#         re_password = request.POST.get('re-password', None)
+#         # request.POST의 get 메소드의 두번째 매개변수는 기본 값을 의미한다.
+
+#         # username = request.POST['username']
+#         # password = request.POST['password']
+#         # re_password = request.POST['re-password']
+
+#         res_data = {}
+
+#         if not (username and useremail and password and re_password):
+#             res_data['error'] = '모든 값을 입력해야합니다.'
+#         if password != re_password:
+#             res_data['error'] = '비밀번호가 다릅니다.'
+#             # return HttpResponse('비밀번호가 다릅니다!')
+#         else:
+#             deathuser = Deathuser(
+#                 username = username,
+#                 useremail = useremail,
+#                 password = make_password(password)
+#             )
+
+#         deathuser.save()
+
+#         return render(request, 'login.html', res_data) # res_data라는 변수를 html 코드로 전송
 
