@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from django.http import Http404
 from death_user.models import Deathuser
 from .models import Board
@@ -34,5 +35,9 @@ def board_write(request):
     return render(request, 'board_write.html', {'form': form})
 
 def board_list(request):
-    boards = Board.objects.all().order_by('-id') # 가장 최신 것을 먼저가져오겠다.
+    all_boards = Board.objects.all().order_by('-id') # 가장 최신 것을 먼저가져오겠다.
+    page = request.GET.get('p', 1) 
+    paginator = Paginator(all_boards, 5)
+
+    boards = paginator.get_page(page)
     return render(request, 'board_list.html', {'boards': boards})

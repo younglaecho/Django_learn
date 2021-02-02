@@ -12,9 +12,12 @@ def home(request):
 
     if user_id:
         deathuser = Deathuser.objects.get(pk=user_id) # user_id를 기본키로 함
-        return HttpResponse(deathuser.username)
 
-    return HttpResponse('Home')
+
+    return render(request, 'home.html')
+    #     return HttpResponse(deathuser.username)
+
+    # return HttpResponse('Home')
 
 def logout(request):
     if request.session.get('user'):
