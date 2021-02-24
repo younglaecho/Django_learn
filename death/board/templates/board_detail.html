@@ -8,6 +8,15 @@
             <input type="text" class="form-control" id="title" value="{{ board.title }}" readonly />
             <label for="contents">내용</label>
             <textarea class="form-control" name="contents" rows="15" readonly>{{ board.contents }}</textarea>
+            <label for="tags">태그</label>
+            <span id="tags" class="form-control">
+                <!-- {% for tag in board.tags.all %}
+                    {{ tag.name }}
+                {% endfor %}                 -->
+                <!-- board.tags 는 쿼리셋이므로 반복문을 통해 각각의 값을 가져올 수 있다. -->
+                {{ board.tags.all|join:", "}}
+                <!-- 이런 방식으로 join을 활용할 수도 있다. -->
+            </span>
         </div>
         <button class="btn btn-primary" onclick="location.href='/board/list'">돌아가기</button>
     </div>

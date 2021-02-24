@@ -10,6 +10,7 @@ class Board(models.Model):
                                 default='some content')
     writer = models.ForeignKey('death_user.Deathuser', on_delete=models.CASCADE,
                                  verbose_name='작성자') # on_delete= models.CASCADE : ForeignKey 에 해당하는 데이터가 삭제되면 같이 삭제
+    tags = models.ManyToManyField('tag.Tag', verbose_name='태그')
     registered_dttm = models.DateTimeField(auto_now_add=True,
                                            verbose_name='등록시간')
 
