@@ -15,7 +15,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls import include
+from fcuser.views import index, RegisterView, LoginView
+from product.views import ProductList, ProductCreate, ProductDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', index),
+    path('summernote/', include('django_summernote.urls')),
+    path('register/', RegisterView.as_view()), # class를 사용하여 뷰를 만든 경우 as_view 메소드를 사용해야한다.
+    path('login/', LoginView.as_view()),
+    path('product/', ProductList.as_view()),
+    path('product/<int:pk>/', ProductDetail.as_view()),
+    path('product/create/', ProductCreate.as_view())
 ]
