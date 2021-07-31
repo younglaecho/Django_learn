@@ -3,10 +3,14 @@
 {% block content %} 
 <h2>yrcho Django Application</h2>
 <ul>
-    {% for appname in applist %}
-    {% with appname|add:":"|add:"index" as urlvar %}
-    <li><a href="{% url urlvar %}">{{ appname }}</a></li>
-    {% endwith %}
+    {# {% for appname in applist %} #}
+    {# {% with appname|add:":"|add:"index" as urlvar %} #}
+    {# <li><a href="{% url urlvar %}">{{ appname }}</a></li> #}
+    {# {% endwith %} #}
+    {# {% endfor %} #}
+    
+    {% for key, value in verbose_dict.items %}
+        <li><a href="{% url key|add:':index' %}"></a>{{ value }}</li>
     {% endfor %}
 </ul>
 {% endblock content %}
