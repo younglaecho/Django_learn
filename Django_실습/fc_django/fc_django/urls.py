@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from fcuser.views import index, RegisterView, LoginView
+from fcuser.views import index, RegisterView, LoginView, logout
 from product.views import ProductList, ProductCreate, ProductDetail
+from order.views import OrderCreate, OrderList # OrderFail
+from imageUp.views import PostView
+from django.conf import settings 
+from django.conf.urls.static import static 
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,7 +30,15 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('register/', RegisterView.as_view()), # class를 사용하여 뷰를 만든 경우 as_view 메소드를 사용해야한다.
     path('login/', LoginView.as_view()),
+    path('logout/', logout),
     path('product/', ProductList.as_view()),
     path('product/<int:pk>/', ProductDetail.as_view()),
-    path('product/create/', ProductCreate.as_view())
+    path('product/create/', ProductCreate.as_view()),
+    path('order/',OrderList.as_view()),
+    path('order/create/',OrderCreate.as_view()),
+    # path('order/fail/', OrderFail.as_view()),
+    path('imageUp/', PostView.as_view() ),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

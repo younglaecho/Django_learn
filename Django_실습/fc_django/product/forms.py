@@ -1,5 +1,8 @@
 from django import forms
 from .models import Product
+from django_summernote.widgets import SummernoteWidget
+
+
 
 class RegisterForm(forms.Form):
     name = forms.CharField(
@@ -16,13 +19,15 @@ class RegisterForm(forms.Form):
     description = forms.CharField(
         error_messages={
             'required': '상품설명을 입력해주세요.'
-        }, label='상품설명'
+        },  widget=SummernoteWidget(attrs={'summernote': {'width': '100%', 'height': '400px'}}), label='상품설명'
     )
     stock = forms.IntegerField(
         error_messages={
             'required': '재고를 입력해주세요.'
-        }, label='재고'
+        }, 
+        label='재고'
     )
+    
 
     def clean(self):
         cleaned_data = super().clean()
