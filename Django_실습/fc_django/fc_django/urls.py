@@ -17,7 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from fcuser.views import index, RegisterView, LoginView, logout
-from product.views import ProductList, ProductCreate, ProductDetail
+from product.views import (
+    ProductList, ProductCreate, ProductDetail,
+    ProductListAPI
+)
 from order.views import OrderCreate, OrderList # OrderFail
 from imageUp.views import PostView
 from django.conf import settings 
@@ -38,6 +41,8 @@ urlpatterns = [
     path('order/create/',OrderCreate.as_view()),
     # path('order/fail/', OrderFail.as_view()),
     path('imageUp/', PostView.as_view() ),
+
+    path('api/product/',ProductListAPI.as_view() )
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
